@@ -66,7 +66,7 @@ public class Board extends JFrame {
         panel.add(titleField);
         panel.add(new JLabel("내용:"));
         panel.add(contentScrollPane);
-        45panel.add(addButton);
+        panel.add(addButton);
         panel.add(new JLabel("게시글 목록:"));
         panel.add(listScrollPane);
         panel.add(rouletteButton);
