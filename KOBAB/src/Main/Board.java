@@ -1,10 +1,10 @@
-package Main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Board extends JFrame {
     private JTextField titleField;
@@ -40,6 +40,14 @@ public class Board extends JFrame {
             }
         });
 
+        JButton rouletteButton = new JButton("오늘의 메뉴 룰렛 돌리기");
+        rouletteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                spinRoulette();
+            }
+        });
+
         postListModel = new DefaultListModel<>();
         postList = new JList<>(postListModel);
         postList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -57,9 +65,10 @@ public class Board extends JFrame {
         panel.add(titleField);
         panel.add(new JLabel("내용:"));
         panel.add(contentScrollPane);
-        panel.add(addButton);
+        45panel.add(addButton);
         panel.add(new JLabel("게시글 목록:"));
         panel.add(listScrollPane);
+        panel.add(rouletteButton);
 
         add(panel);
         setVisible(true);
@@ -76,11 +85,17 @@ public class Board extends JFrame {
         }
     }
 
+    private void spinRoulette() {
+        String[] menu = {"Pizza", "Burger", "Sushi", "Salad", "Pasta", "Tacos"};
+        Random random = new Random();
+        int selected = random.nextInt(menu.length);
+
+        JOptionPane.showMessageDialog(null, "오늘의 메뉴는 " + menu[selected] + "입니다!", "오늘의 메뉴", JOptionPane.PLAIN_MESSAGE);
+    }
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Board();
-            }
+        SwingUtilities.invokeLater(() -> {
+            new Board().setVisible(true);
         });
     }
 }
