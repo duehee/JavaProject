@@ -114,8 +114,8 @@ public class RandomRoulette extends JFrame {
 
             // Draw the foods with animation to simulate roulette spinning
             for (int i = 0; i < foods.length; i++) {
-                // Use a gradient color to make it look like a gradient on the roulette
-                Color color = new Color(255, 255 - i * 50, 255);
+                // Use an orange color for the roulette
+                Color color = new Color(255 - 10 * i, 165 - 15 * i, 0);  // RGB values for orange color
                 g.setColor(color);
 
                 // Draw the food at its current position based on the spinning angle
@@ -125,12 +125,13 @@ public class RandomRoulette extends JFrame {
 
                 // Calculate the position to draw the food name
                 double radian = Math.toRadians(-(foodAngle + arcAngle / 2));
-                int textX = (int) (centerX + radius * 0.7 * Math.cos(radian));  // Adjusted value here
+                int textX = (int) (centerX + radius * 0.7 * Math.cos(radian));
                 int textY = (int) (centerY + radius * 0.7 * Math.sin(radian));
 
                 g.setColor(Color.BLACK);
                 g.drawString(foods[i], textX, textY);
             }
+
         }
     }
 
