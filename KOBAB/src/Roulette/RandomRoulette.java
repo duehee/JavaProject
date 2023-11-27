@@ -15,6 +15,8 @@ public class RandomRoulette extends JFrame {
     private int angle = 0;
     private boolean spinning = false;
     private Timer timer;
+    
+    private String[] foods = {"피자", "떡볶이", "샐러드", "제육볶음", "치킨"};
 
     public RandomRoulette() {
         setTitle("Random Timed Roulette Animation");
@@ -65,9 +67,9 @@ public class RandomRoulette extends JFrame {
 
     private void spinRoulette(JFrame dialogFrame) {
         Random random = new Random();
-        int targetAngle = random.nextInt(360) + 3600; // 더 빨리 돌기 위해 각도 증가
+        int targetAngle = random.nextInt(360) + 3600;
 
-        int spinDuration = random.nextInt(2000) + 2000; // 2초에서 4초 사이의 랜덤한 시간
+        int spinDuration = random.nextInt(2000) + 2000;
 
         timer = new Timer(10, new ActionListener() {
             int elapsedTime = 0;
@@ -81,6 +83,13 @@ public class RandomRoulette extends JFrame {
                 if (elapsedTime >= spinDuration) {
                     ((Timer) e.getSource()).stop();
                     spinning = false;
+
+                    // Select a random food when spinning is complete
+                    int selectedFoodIndex = (angle / 72) % foods.length;
+                    String selectedFood = foods[selectedFoodIndex];
+
+                    // Display the selected food (you can modify this part as needed)
+                    JOptionPane.showMessageDialog(dialogFrame, "Selected Food: " + selectedFood);
                 }
             }
         });
@@ -103,8 +112,26 @@ public class RandomRoulette extends JFrame {
             int x = centerX - radius;
             int y = centerY - radius;
 
-            g.setColor(Color.RED);
-            g.fillArc(x, y, 2 * radius, 2 * radius, angle, 45);
+            // Draw the foods with animation to simulate roulette spinning
+            for (int i = 0; i < foods.length; i++) {
+                // Use an orange color for the roulette
+                Color color = new Color(255 - 10 * i, 165 - 15 * i, 0);  // RGB values for orange color
+                g.setColor(color);
+
+                // Draw the food at its current position based on the spinning angle
+                int foodAngle = (angle + i * 72) % 360;
+                int arcAngle = 72;
+                g.fillArc(x, y, 2 * radius, 2 * radius, foodAngle, arcAngle);
+
+                // Calculate the position to draw the food name
+                double radian = Math.toRadians(-(foodAngle + arcAngle / 2));
+                int textX = (int) (centerX + radius * 0.7 * Math.cos(radian));
+                int textY = (int) (centerY + radius * 0.7 * Math.sin(radian));
+
+                g.setColor(Color.BLACK);
+                g.drawString(foods[i], textX, textY);
+            }
+
         }
     }
 
